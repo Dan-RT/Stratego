@@ -1,11 +1,12 @@
-package ca.daniel.www;
+package ca.daniel.www.service;
 
 import ca.daniel.www.model.Game;
+import org.springframework.stereotype.Service;
 
+@Service
+public class GameService {
 
-public class App 
-{
-    public static void main( String[] args ) {
+    public void initGame() {
         Game game = new Game();
         game.init();
         game.randomSet();

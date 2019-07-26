@@ -28,35 +28,35 @@ public class Game {
 
     private List<Piece> initPieces(List<Piece> pieces, int team) {
         for(int i = 0; i < 8; i++) {
-            pieces.add(new Piece(new ObjectId(), PieceType.SCOUT, 8, Movement.JUMP, team, true));
+            pieces.add(new Piece(new ObjectId(), PieceType.SCOUT, 8, Movement.JUMP, team, true, coordinate));
         }
         for(int i = 0; i < 5; i++) {
-            pieces.add(new Piece(new ObjectId(), PieceType.MINER, 5, Movement.NORMAL, team, true));
+            pieces.add(new Piece(new ObjectId(), PieceType.MINER, 5, Movement.NORMAL, team, true, coordinate));
         }
         for(int i = 0; i < 4; i++) {
-            pieces.add(new Piece(new ObjectId(), PieceType.SERGEANT, 4, Movement.NORMAL, team, true));
+            pieces.add(new Piece(new ObjectId(), PieceType.SERGEANT, 4, Movement.NORMAL, team, true, coordinate));
         }
         for(int i = 0; i < 4; i++) {
-            pieces.add(new Piece(new ObjectId(), PieceType.LIEUTENANT, 4, Movement.NORMAL, team, true));
+            pieces.add(new Piece(new ObjectId(), PieceType.LIEUTENANT, 4, Movement.NORMAL, team, true, coordinate));
         }
         for(int i = 0; i < 4; i++) {
-            pieces.add(new Piece(new ObjectId(), PieceType.CAPTAIN, 4, Movement.NORMAL, team, true));
+            pieces.add(new Piece(new ObjectId(), PieceType.CAPTAIN, 4, Movement.NORMAL, team, true, coordinate));
         }
         for(int i = 0; i < 3; i++) {
-            pieces.add(new Piece(new ObjectId(), PieceType.MAJOR, 3, Movement.NORMAL, team, true));
+            pieces.add(new Piece(new ObjectId(), PieceType.MAJOR, 3, Movement.NORMAL, team, true, coordinate));
         }
         for(int i = 0; i < 2; i++) {
-            pieces.add(new Piece(new ObjectId(), PieceType.COLONEL, 2, Movement.NORMAL, team, true));
+            pieces.add(new Piece(new ObjectId(), PieceType.COLONEL, 2, Movement.NORMAL, team, true, coordinate));
         }
-        pieces.add(new Piece(new ObjectId(), PieceType.GENERAL, 1, Movement.NORMAL, team, true));
-        pieces.add(new Piece(new ObjectId(), PieceType.MARSHAL, 1, Movement.NORMAL, team, true));
+        pieces.add(new Piece(new ObjectId(), PieceType.GENERAL, 1, Movement.NORMAL, team, true, coordinate));
+        pieces.add(new Piece(new ObjectId(), PieceType.MARSHAL, 1, Movement.NORMAL, team, true, coordinate));
 
         for(int i = 0; i < 6; i++) {
-            pieces.add(new Piece(new ObjectId(), PieceType.BOMB, 6, Movement.IDLE, team, true));
+            pieces.add(new Piece(new ObjectId(), PieceType.BOMB, 6, Movement.IDLE, team, true, coordinate));
         }
 
-        pieces.add(new Piece(new ObjectId(), PieceType.FLAG, 1, Movement.IDLE, team, true));
-        pieces.add(new Piece(new ObjectId(), PieceType.SPY, 1, Movement.NORMAL, team, true));
+        pieces.add(new Piece(new ObjectId(), PieceType.FLAG, 1, Movement.IDLE, team, true, coordinate));
+        pieces.add(new Piece(new ObjectId(), PieceType.SPY, 1, Movement.NORMAL, team, true, coordinate));
 
         return pieces;
     }
