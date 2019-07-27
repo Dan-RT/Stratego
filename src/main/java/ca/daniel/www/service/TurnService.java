@@ -1,41 +1,54 @@
 package ca.daniel.www.service;
 
+import ca.daniel.www.exception.ActionNotAuthorizedException;
 import ca.daniel.www.model.Coordinate;
 import ca.daniel.www.model.Piece;
 import ca.daniel.www.model.Turn;
 import ca.daniel.www.model.customEnum.Movement;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TurnService {
 
-
-    public boolean isAuthorized(Piece piece) {
-
-        if (piece.getMovement().getType() == "NORMAL") {
-
+    public void movePieceOnBoard(Turn turn) throws ActionNotAuthorizedException {
+        if (isAuthorized(turn)) {
+            turn.getBoard().setPieceOnBoard(turn.getAction(),turn.getPieceToMove().getType().getRank());
+        } else {
+            throw new ActionNotAuthorizedException();
         }
+    }
 
-        if (piece.getMovement().getType() == "JUMP") {
+    private boolean isAuthorized(Turn turn) {
+        Piece piece = turn.getPieceToMove();
 
-        }
-
-        if (piece.getMovement().getType() == "IDLE") {
+        if (piece.getMovement().getType().equals("IDLE")) {
             return false;
         }
 
-        //check movement
-        //check neighbours
-        //check lake
+        Coordinate action = checkMovement(piece.getCoordinate(), turn.getAction(), piece.getMovement());
+
+        if (action == null) {
+            return false;
+        }
+
+        if (piece.getMovement().getType().equals("NORMAL") && squareIsEmpty(turn.getBoard().getBoard(), turn.getAction())) {
+            return true;
+        }
+
+        if (piece.getMovement().getType().equals("JUMP")) {
+            checkNeighbours(turn.getBoard().getBoard(), piece.getCoordinate(), action);
+        }
 
         return false;
     }
 
-    private Coordinate checkMovement(Coordinate prevCoordinate, Coordinate coordinate, Movement movement) {
-        int prevX = prevCoordinate.getX();
-        int prevY = prevCoordinate.getY();
+    private Coordinate checkMovement(Coordinate prevCoordinates, Coordinate coordinate, Movement movement) {
+        int prevX = prevCoordinates.getX();
+        int prevY = prevCoordinates.getY();
         int x = coordinate.getX();
         int y = coordinate.getY();
 
-        Coordinate move = new Coordinate();
+        Coordinate move = new Coordinate(x, y);
 
         switch (movement.getType()) {
             case "IDLE":
@@ -63,5 +76,25 @@ public class TurnService {
         return null;
     }
 
+    public static boolean squareIsEmpty (int board[][], Coordinate coordinate) {
+        return (board[coordinate.getY()][coordinate.getX()] == -2);
+    }
+
+    public boolean checkNeighbours(int board[][], Coordinate prevCoordinates, Coordinate action) {
+        int gap = action.getX();
+        int tmp = gap;
+        Coordinate coordinates = new Coordinate();
+
+        do {
+            coordinates.setX(prevCoordinates.getX() + gap);
+            coordinates.setY(prevCoordinates.getY());
+            if (!squareIsEmpty(board, coordinates)) {
+                return false;
+            }
+            gap--;
+        } while (gap == 0);
+
+        return true;
+    }
 
 }

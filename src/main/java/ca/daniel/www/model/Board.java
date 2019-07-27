@@ -1,10 +1,13 @@
 package ca.daniel.www.model;
 
+import ca.daniel.www.exception.SquareNotEmptyException;
+import ca.daniel.www.service.TurnService;
+
 import java.util.List;
 
-public class Board {
-    int[][] board = new int[10][10];
-    
+public class Board extends JacksonObject {
+    private int[][] board = new int[10][10];
+
     public Board(){
         init();
     }
@@ -34,25 +37,25 @@ public class Board {
         }
     }
 
-    public void setPieceOnBoard(Piece piece) throws Exception {
-        int x = piece.getX();
-        int y = piece.getY();
-
-        if (isEmpty(x, y)) {
-            this.board[y][x] = piece.getType().getRank();
-        } else {
-            throw new Exception("(" + x + "," + y + " square not empty");
-        }
+    public void setPieceOnBoard(Coordinate coordinate, int rank) {
+        this.board[coordinate.getY()][coordinate.getX()] = rank;
     }
 
-    public void setPieces(List<Piece> pieces) throws Exception {
+    public void setPieces(List<Piece> pieces) throws Exception, SquareNotEmptyException {
         for (Piece piece : pieces) {
-            setPieceOnBoard(piece);
+            if (TurnService.squareIsEmpty(this.board, piece.getCoordinate())) {
+                setPieceOnBoard(piece.getCoordinate(), piece.getType().getRank());
+            } else {
+                throw new SquareNotEmptyException();
+            }
         }
     }
 
-    private boolean isEmpty(int x, int y) {
-        return (board[y][x] == -1 || board[y][x] == -2);
+    public int[][] getBoard() {
+        return board;
     }
 
+    public void setBoard(int[][] board) {
+        this.board = board;
+    }
 }

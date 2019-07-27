@@ -10,7 +10,7 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"prevBoard", "board", "pieces1", "pieces2"})
-public class Turn {
+public class Turn extends JacksonObject {
     @JsonProperty("id")
     private String id;
     @NotNull
@@ -29,12 +29,7 @@ public class Turn {
     @Valid
     @JsonProperty("pieceToMove")
     private Piece pieceToMove;
-    @NotNull
-    @JsonProperty("x")
-    private int x;
-    @NotNull
-    @JsonProperty("x")
-    private int y;
+    private Coordinate action;
 
     @JsonProperty("id")
     public String getId() {
@@ -68,22 +63,6 @@ public class Turn {
     public List<Piece> getPieces2() {
         return pieces2;
     }
-    @JsonProperty("y")
-    public int getY() {
-        return y;
-    }
-    @JsonProperty("y")
-    public void setY(int y) {
-        this.y = y;
-    }
-    @JsonProperty("x")
-    public int getX() {
-        return x;
-    }
-    @JsonProperty("x")
-    public void setX(int x) {
-        this.x = x;
-    }
     @JsonProperty("pieceToMove")
     public Piece getPieceToMove() {
         return pieceToMove;
@@ -91,5 +70,13 @@ public class Turn {
     @JsonProperty("pieceToMove")
     public void setPieceToMove(Piece pieceToMove) {
         this.pieceToMove = pieceToMove;
+    }
+    @JsonProperty("action")
+    public Coordinate getAction() {
+        return action;
+    }
+    @JsonProperty("action")
+    public void setAction(Coordinate action) {
+        this.action = action;
     }
 }

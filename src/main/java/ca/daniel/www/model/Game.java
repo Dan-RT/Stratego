@@ -7,7 +7,7 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Game extends JacksonObject {
     private Board board;
     List<Player> players;
     List<Piece> pieces1;

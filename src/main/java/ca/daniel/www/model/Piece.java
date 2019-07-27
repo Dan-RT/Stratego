@@ -4,7 +4,7 @@ import ca.daniel.www.model.customEnum.Movement;
 import ca.daniel.www.model.customEnum.PieceType;
 import org.bson.types.ObjectId;
 
-public class Piece {
+public class Piece extends JacksonObject {
     private final ObjectId _id;
     private final PieceType type;
     private final int maxNumber;

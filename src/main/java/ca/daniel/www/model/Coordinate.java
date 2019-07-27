@@ -1,8 +1,17 @@
 package ca.daniel.www.model;
 
-public class Coordinate {
-    int x;
-    int y;
+public class Coordinate extends JacksonObject {
+    private int x;
+    private int y;
+
+    public Coordinate() {
+
+    }
+
+    public Coordinate(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
     public int getX() {
         return x;
