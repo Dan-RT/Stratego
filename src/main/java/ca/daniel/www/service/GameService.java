@@ -35,16 +35,12 @@ public class GameService {
                     Piece piece = new Piece();
                     piece.setType(PieceType.LAKE);
                     piece.setCoordinate(new Coordinate(i, j));
-                    board[j][i] = piece;
-
-                    //new Piece(new ObjectId(), PieceType.LAKE, new Coordinate(i, j));
+                    board[i][j] = piece;
                 } else {
                     Piece piece = new Piece();
                     piece.setType(PieceType.NONE);
                     piece.setCoordinate(new Coordinate(i, j));
-                    board[j][i] = piece;
-
-                    //board[j][i] = new Piece(new ObjectId(), PieceType.NONE, new Coordinate(i, j));
+                    board[i][j] = piece;
                 }
             }
         }
@@ -57,12 +53,12 @@ public class GameService {
         for(int i = 0; i < board.length; i++) {
             System.out.print("\n");
             for(int j = 0; j < board[i].length; j++) {
-                int rank = board[i][j].getType().getRank();
+                int rank = board[j][i].getType().getRank();
                 String output = "|";
                 if (rank < 10 && rank >= 0) {
                     output = output + " ";
                 }
-                output = output + board[i][j].getType().getRank();
+                output = output + board[j][i].getType().getRank();
                 if (j == 9) {
                     output = output + "|";
                 }
@@ -73,15 +69,26 @@ public class GameService {
     }
 
     public static Piece[][] setPieceOnBoard(Piece[][] board, Coordinate prevCoordinate, Coordinate coordinate, Piece piece) {
+
         if (prevCoordinate != null) {
+
+            Piece prev_ = board[prevCoordinate.getX()][prevCoordinate.getY()];
+            Piece new_ = board[coordinate.getX()][coordinate.getY()];
+
+            System.out.println(prev_.toString());
+            System.out.println(new_.toString());
+
+
+
             Piece pieceTmp = new Piece();
             pieceTmp.setType(PieceType.NONE);
-            pieceTmp.setCoordinate(new Coordinate(prevCoordinate.getY(), prevCoordinate.getX()));
-            board[prevCoordinate.getY()][prevCoordinate.getX()] = pieceTmp;
+            pieceTmp.setCoordinate(new Coordinate(prevCoordinate.getX(), prevCoordinate.getY()));
+            board[prevCoordinate.getX()][prevCoordinate.getY()] = pieceTmp;
 
             //this.board[prevCoordinate.getY()][prevCoordinate.getX()] = new Piece(new ObjectId(), PieceType.NONE, new Coordinate(prevCoordinate.getY(), prevCoordinate.getX()));
         }
-        board[coordinate.getY()][coordinate.getX()] = piece;
+        piece.setCoordinate(coordinate);
+        board[coordinate.getX()][coordinate.getY()] = piece;
 
         return board;
     }

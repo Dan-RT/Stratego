@@ -79,7 +79,7 @@ public class TurnService {
     }
 
     public static boolean squareIsEmpty (Piece board[][], Coordinate coordinate) {
-        PieceType tmp = board[coordinate.getY()][coordinate.getX()].getType();
+        PieceType tmp = board[coordinate.getX()][coordinate.getY()].getType();
 
         return (tmp == PieceType.NONE);
     }

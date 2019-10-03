@@ -40,12 +40,19 @@ public class GameController {
     @CrossOrigin
     @GetMapping("/game/initialize")
     public Game initializeGame() {
-        return gameService.initGame();
+
+        Game game = gameService.initGame();
+
+        return game;
     }
 
     @CrossOrigin
     @PostMapping("/turn")
     public Turn turn(@ApiParam(value = "turn valid object", required = true) @Valid @RequestBody Turn turn) {
-        return turnService.movePieceOnBoard(turn);
+        Turn resp = turnService.movePieceOnBoard(turn);
+
+        GameService.displayBoard(resp.getBoard());
+
+        return resp;
     }
 }
