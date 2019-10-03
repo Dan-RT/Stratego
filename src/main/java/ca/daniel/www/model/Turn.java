@@ -6,47 +6,43 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"prevBoard", "board", "pieces1", "pieces2"})
+@JsonPropertyOrder({"board","pieceToMove", "action", "authorized"})
 public class Turn extends JacksonObject {
-    @JsonProperty("id")
-    private String id;
     @NotNull
-    @Valid
     @JsonProperty("board")
-    private Board board;
-    @NotNull
+    private Piece[][] board;
+    /*@NotNull
     @Valid
     @JsonProperty("pieces1")
     private List<Piece> pieces1;
     @NotNull
     @Valid
     @JsonProperty("pieces2")
-    private List<Piece> pieces2;
+    private List<Piece> pieces2;*/
+
     @NotNull
     @Valid
     @JsonProperty("pieceToMove")
     private Piece pieceToMove;
+    @NotNull
+    @Valid
+    @JsonProperty("action")
     private Coordinate action;
+    @JsonProperty("authorized")
+    private boolean authorized;
 
-    @JsonProperty("id")
-    public String getId() {
-        return id;
-    }
-    @JsonProperty("id")
-    public void setId(String id) {
-        this.id = id;
-    }
+
     @JsonProperty("board")
-    public Board getBoard() {
+    public Piece[][] getBoard() {
         return board;
     }
     @JsonProperty("board")
-    public void setBoard(Board board) {
+    public void setBoard(Piece[][] board) {
         this.board = board;
     }
+    /*
     @JsonProperty("pieces1")
     public void setPieces1(List<Piece> pieces1) {
         this.pieces1 = pieces1;
@@ -62,7 +58,7 @@ public class Turn extends JacksonObject {
     @JsonProperty("pieces2")
     public List<Piece> getPieces2() {
         return pieces2;
-    }
+    }*/
     @JsonProperty("pieceToMove")
     public Piece getPieceToMove() {
         return pieceToMove;
@@ -78,5 +74,13 @@ public class Turn extends JacksonObject {
     @JsonProperty("action")
     public void setAction(Coordinate action) {
         this.action = action;
+    }
+    @JsonProperty("authorized")
+    public boolean isAuthorized() {
+        return authorized;
+    }
+    @JsonProperty("authorized")
+    public void setAuthorized(boolean authorized) {
+        this.authorized = authorized;
     }
 }

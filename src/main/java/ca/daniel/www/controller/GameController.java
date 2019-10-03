@@ -1,16 +1,14 @@
 package ca.daniel.www.controller;
 
-
 import ca.daniel.www.exception.ActionNotAuthorizedException;
-import ca.daniel.www.model.Turn;
+import ca.daniel.www.model.*;
 import ca.daniel.www.service.GameService;
 import ca.daniel.www.service.TurnService;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -27,27 +25,27 @@ public class GameController {
         this.turnService = turnService;
     }
 
+    @CrossOrigin
     @GetMapping("/helloWorld")
     public String helloWorld() {
         return "helloWorld";
     }
 
+    @CrossOrigin
     @GetMapping("/game")
-    public ResponseEntity game() {
-        gameService.initGame();
-        return new ResponseEntity(HttpStatus.OK);
+    public Game game() {
+        return gameService.setGame();
     }
 
+    @CrossOrigin
+    @GetMapping("/game/initialize")
+    public Game initializeGame() {
+        return gameService.initGame();
+    }
+
+    @CrossOrigin
     @PostMapping("/turn")
-    public ResponseEntity turn(@Valid Turn turn) {
-        try {
-            turnService.movePieceOnBoard(turn);
-            turn.getBoard().display();
-        } catch (ActionNotAuthorizedException e) {
-            return new ResponseEntity(e, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity(HttpStatus.OK);
+    public Turn turn(@ApiParam(value = "turn valid object", required = true) @Valid @RequestBody Turn turn) {
+        return turnService.movePieceOnBoard(turn);
     }
-
-
 }
