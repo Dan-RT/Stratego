@@ -33,6 +33,9 @@ public class Turn extends JacksonObject {
     @JsonProperty("authorized")
     private boolean authorized;
 
+    public Turn() {
+        super();
+    }
 
     @JsonProperty("board")
     public Piece[][] getBoard() {
@@ -59,6 +62,7 @@ public class Turn extends JacksonObject {
     public List<Piece> getPieces2() {
         return pieces2;
     }*/
+
     @JsonProperty("pieceToMove")
     public Piece getPieceToMove() {
         return pieceToMove;

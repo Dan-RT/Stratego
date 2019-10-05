@@ -1,7 +1,5 @@
 package ca.daniel.www.service;
 
-import ca.daniel.www.exception.ActionNotAuthorizedException;
-import ca.daniel.www.exception.SquareNotEmptyException;
 import ca.daniel.www.model.Coordinate;
 import ca.daniel.www.model.Piece;
 import ca.daniel.www.model.Turn;
@@ -9,14 +7,12 @@ import ca.daniel.www.model.customEnum.Movement;
 import ca.daniel.www.model.customEnum.PieceType;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class TurnService {
 
     public Turn movePieceOnBoard(Turn turn) {
         if (isAuthorized(turn)) {
-            turn.setBoard(GameService.setPieceOnBoard(turn.getBoard(), turn.getPieceToMove().getCoordinate(),turn.getAction(),turn.getPieceToMove()));
+            turn.setBoard(GameService.setPieceOnBoard(turn.getBoard(), turn.getPieceToMove().getCoordinate(), turn.getAction(), turn.getPieceToMove()));
             turn.setAuthorized(true);
         } else {
             turn.setAuthorized(false);
@@ -121,6 +117,5 @@ public class TurnService {
 
         return true;
     }
-
 
 }

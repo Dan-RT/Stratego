@@ -25,7 +25,6 @@ public class GameService {
         return game;
     }
 
-
     public static Piece[][] initBoard() {
         Piece[][] board = new Piece[10][10];
 
@@ -78,8 +77,6 @@ public class GameService {
             System.out.println(prev_.toString());
             System.out.println(new_.toString());
 
-
-
             Piece pieceTmp = new Piece();
             pieceTmp.setType(PieceType.NONE);
             pieceTmp.setCoordinate(new Coordinate(prevCoordinate.getX(), prevCoordinate.getY()));
@@ -92,7 +89,6 @@ public class GameService {
 
         return board;
     }
-
 
     public static void setPieces(Piece[][] board, List<Piece> pieces) throws Exception, SquareNotEmptyException {
         for (Piece piece : pieces) {

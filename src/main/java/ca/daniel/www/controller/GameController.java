@@ -1,13 +1,11 @@
 package ca.daniel.www.controller;
 
-import ca.daniel.www.exception.ActionNotAuthorizedException;
 import ca.daniel.www.model.*;
+import ca.daniel.www.service.AttackService;
 import ca.daniel.www.service.GameService;
 import ca.daniel.www.service.TurnService;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,14 +13,15 @@ import javax.validation.Valid;
 @RestController
 public class GameController {
 
-    @Autowired
-    GameService gameService;
-    @Autowired
-    TurnService turnService;
+    private GameService gameService;
+    private TurnService turnService;
+    private AttackService attackService;
 
-    public GameController (GameService gameService, TurnService turnService) {
+    @Autowired
+    public GameController(GameService gameService, TurnService turnService, AttackService attackService) {
         this.gameService = gameService;
         this.turnService = turnService;
+        this.attackService = attackService;
     }
 
     @CrossOrigin
@@ -54,5 +53,16 @@ public class GameController {
         GameService.displayBoard(resp.getBoard());
 
         return resp;
+    }
+
+    @CrossOrigin
+    @PostMapping("/attack")
+    public Attack attack(@ApiParam(value = "attack valid object", required = true) @Valid @RequestBody Attack attack) {
+
+        attack = attackService.manageAttack(attack);
+
+        GameService.displayBoard(attack.getBoard());
+
+        return attack;
     }
 }
