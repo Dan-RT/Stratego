@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TurnService {
 
     public Turn movePieceOnBoard(Turn turn) {
-        if (isAuthorized(turn)) {
+        if (isAuthorized(turn.getBoard(), turn.getPieceToMove(), turn.getAction(), false)) {
             turn.setBoard(GameService.setPieceOnBoard(turn.getBoard(), turn.getPieceToMove().getCoordinate(), turn.getAction(), turn.getPieceToMove()));
             turn.setAuthorized(true);
         } else {
@@ -21,25 +21,28 @@ public class TurnService {
         return turn;
     }
 
-    private static boolean isAuthorized(Turn turn) {
-        Piece piece = turn.getPieceToMove();
+    public static boolean isAuthorized(Piece[][] board, Piece piece, Coordinate action, boolean attack) {
 
         if (piece.getMovement().getType().equals("IDLE")) {
             return false;
         }
 
-        boolean moveAuthozired = checkMovement(piece.getCoordinate(), turn.getAction(), piece.getMovement());
+        boolean moveAuthozired = checkMovement(piece.getCoordinate(), action, piece.getMovement());
 
         if (!moveAuthozired) {
             return false;
         }
 
-        if (piece.getMovement().getType().equals("NORMAL") && squareIsEmpty(turn.getBoard(), turn.getAction())) {
-            return true;
+        if (piece.getMovement().getType().equals("NORMAL")) {
+            if (attack) {
+                return true;
+            } else {
+                return squareIsEmpty(board, action);
+            }
         }
 
         if (piece.getMovement().getType().equals("JUMP")) {
-            return checkNeighbours(turn.getBoard(), piece.getCoordinate(), turn.getAction());
+            return checkNeighbours(board, piece.getCoordinate(), action, attack);
         }
 
         return false;
@@ -80,7 +83,7 @@ public class TurnService {
         return (tmp == PieceType.NONE);
     }
 
-    public static boolean checkNeighbours(Piece board[][], Coordinate prevCoordinates, Coordinate action) {
+    public static boolean checkNeighbours(Piece board[][], Coordinate prevCoordinates, Coordinate action, boolean attack) {
 
         int gap = 0;
         boolean gapX = false;
@@ -94,6 +97,8 @@ public class TurnService {
             gapX = false;
         }
 
+        int gapInitial = gap;
+
         do {
 
             if (gapX) {
@@ -104,8 +109,10 @@ public class TurnService {
                 coordinates.setY(prevCoordinates.getY() + gap);
             }
 
-            if (!squareIsEmpty(board, coordinates)) {
-                return false;
+            if (gapInitial == gap) {
+                if (!attack && !squareIsEmpty(board, coordinates)) {
+                    return false;
+                }
             }
 
             if (gap > 0) {

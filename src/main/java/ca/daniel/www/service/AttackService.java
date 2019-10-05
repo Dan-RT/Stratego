@@ -1,7 +1,6 @@
 package ca.daniel.www.service;
 
 import ca.daniel.www.model.Attack;
-import ca.daniel.www.model.Coordinate;
 import ca.daniel.www.model.Piece;
 import ca.daniel.www.model.customEnum.PieceType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,11 @@ public class AttackService {
     }
 
     public Attack manageAttack(Attack attack) {
+
+        if (!TurnService.isAuthorized(attack.getBoard(), attack.getPieceAttacking(), attack.getPieceAttacked().getCoordinate(), true)) {
+            return attack;
+        }
+
         int rankAttacking = attack.getPieceAttacking().getType().getRank();
         int rankAttacked = attack.getPieceAttacked().getType().getRank();
 

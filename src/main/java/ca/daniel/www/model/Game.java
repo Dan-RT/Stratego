@@ -3,7 +3,6 @@ package ca.daniel.www.model;
 import ca.daniel.www.model.customEnum.Movement;
 import ca.daniel.www.model.customEnum.PieceType;
 import ca.daniel.www.service.GameService;
-import ca.daniel.www.service.TurnService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
