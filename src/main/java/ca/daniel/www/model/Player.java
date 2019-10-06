@@ -3,7 +3,6 @@ package ca.daniel.www.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,12 +10,12 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"_id", "name", "team"})
+@JsonPropertyOrder({"_id", "playerId", "name", "team"})
 @Document(collection = "player")
 public class Player extends JacksonObject {
     @Id
     @JsonProperty("_id")
-    private ObjectId _id;
+    private String _id;
     @NotNull
     @NotEmpty
     @JsonProperty("name")
@@ -30,11 +29,11 @@ public class Player extends JacksonObject {
     }
 
     @JsonProperty("_id")
-    public ObjectId get_id() {
+    public String get_id() {
         return _id;
     }
     @JsonProperty("_id")
-    public void set_id(ObjectId _id) {
+    public void set_id(String _id) {
         this._id = _id;
     }
     @JsonProperty("name")

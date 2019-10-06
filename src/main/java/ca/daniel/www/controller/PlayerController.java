@@ -20,8 +20,8 @@ public class PlayerController {
     }
 
     @CrossOrigin
-    @GetMapping("/player")
-    public Player getPlayer(@ApiParam(value = "string id", required = true) String id) {
+    @GetMapping("/player/{id}")
+    public Player getPlayer(@PathVariable("id") String id) {
         return this.playerService.getPlayer(id);
     }
 
