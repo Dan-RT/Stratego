@@ -86,8 +86,8 @@ public class GameService {
             Piece prev_ = board[prevCoordinate.getX()][prevCoordinate.getY()];
             Piece new_ = board[coordinate.getX()][coordinate.getY()];
 
-            System.out.println(prev_.toString());
-            System.out.println(new_.toString());
+            //System.out.println(prev_.toString());
+            //System.out.println(new_.toString());
 
             Piece pieceTmp = new Piece();
             pieceTmp.setType(PieceType.NONE);

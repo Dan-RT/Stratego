@@ -17,7 +17,7 @@ public class TurnService {
         } else {
             turn.setAuthorized(false);
         }
-        GameService.displayBoard(turn.getBoard());
+        //GameService.displayBoard(turn.getBoard());
         return turn;
     }
 

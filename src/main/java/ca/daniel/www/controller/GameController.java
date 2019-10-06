@@ -50,7 +50,7 @@ public class GameController {
     public Turn turn(@ApiParam(value = "turn valid object", required = true) @Valid @RequestBody Turn turn) {
         Turn resp = turnService.movePieceOnBoard(turn);
 
-        GameService.displayBoard(resp.getBoard());
+        //GameService.displayBoard(resp.getBoard());
 
         return resp;
     }
@@ -61,7 +61,7 @@ public class GameController {
 
         attack = attackService.manageAttack(attack);
 
-        GameService.displayBoard(attack.getBoard());
+        //GameService.displayBoard(attack.getBoard());
 
         return attack;
     }
