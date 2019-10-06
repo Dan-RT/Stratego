@@ -26,8 +26,8 @@ public class GameController {
 
     @CrossOrigin
     @GetMapping("/helloWorld")
-    public String helloWorld() {
-        return "helloWorld";
+    public Game helloWorld() {
+        return this.gameService.testDb();
     }
 
     @CrossOrigin

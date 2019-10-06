@@ -1,16 +1,24 @@
 package ca.daniel.www.service;
 
-import ca.daniel.www.exception.SquareNotEmptyException;
+import ca.daniel.www.dao.GameDao;
 import ca.daniel.www.model.Coordinate;
 import ca.daniel.www.model.Game;
 import ca.daniel.www.model.Piece;
 import ca.daniel.www.model.customEnum.PieceType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class GameService {
+
+    private GameDao gameDao;
+
+    @Autowired
+    public GameService(GameDao gameDao) {
+        this.gameDao = gameDao;
+    }
 
     public Game initGame() {
         Game game = new Game();
@@ -23,6 +31,10 @@ public class GameService {
         game.init();
         game.randomSet();
         return game;
+    }
+
+    public Game testDb() {
+        return gameDao.saveGame(this.initGame());
     }
 
     public static Piece[][] initBoard() {
@@ -90,12 +102,10 @@ public class GameService {
         return board;
     }
 
-    public static void setPieces(Piece[][] board, List<Piece> pieces) throws Exception, SquareNotEmptyException {
+    public static void setPieces(Piece[][] board, List<Piece> pieces) {
         for (Piece piece : pieces) {
             if (TurnService.squareIsEmpty(board, piece.getCoordinate())) {
                 setPieceOnBoard(board,null, piece.getCoordinate(), piece);
-            } else {
-                throw new SquareNotEmptyException();
             }
         }
     }
