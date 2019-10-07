@@ -4,6 +4,7 @@ import ca.daniel.www.dao.GameDao;
 import ca.daniel.www.model.Coordinate;
 import ca.daniel.www.model.Game;
 import ca.daniel.www.model.Piece;
+import ca.daniel.www.model.Player;
 import ca.daniel.www.model.customEnum.PieceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,18 @@ public class GameService {
         this.gameDao = gameDao;
     }
 
-    public Game initGame() {
+    public Game initGame(Player player1, Player player2) {
         Game game = new Game();
         game.init();
-        return game;
+        player1.setTeam(1);
+        player2.setTeam(2);
+        game.addPlayer(player1);
+        game.addPlayer(player2);
+        return gameDao.saveGame(game);
+    }
+
+    public Game updateGame(Game game) {
+        return gameDao.updateGame(game);
     }
 
     public Game setGame() {
@@ -31,10 +40,6 @@ public class GameService {
         game.init();
         game.randomSet();
         return game;
-    }
-
-    public Game testDb() {
-        return gameDao.saveGame(this.initGame());
     }
 
     public static Piece[][] initBoard() {

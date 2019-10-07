@@ -1,5 +1,7 @@
 package ca.daniel.www.controller;
 
+import ca.daniel.www.exception.OpponentNotReady;
+import ca.daniel.www.model.Game;
 import ca.daniel.www.model.Player;
 import ca.daniel.www.service.PlayerService;
 import io.swagger.annotations.ApiParam;
@@ -36,4 +38,16 @@ public class PlayerController {
     public Player addPlayer(@ApiParam(value = "player valid object", required = true) @Valid @RequestBody Player player) {
         return this.playerService.savePlayer(player);
     }
+
+    @CrossOrigin
+    @GetMapping("/player/opponent/{id}")
+    public Game getOpponent(@PathVariable("id") String id) throws OpponentNotReady {
+        Game game = this.playerService.getOpponent(id);
+        if (game == null) {
+            throw new OpponentNotReady("No ready opponent was found.");
+        } else {
+            return game;
+        }
+    }
+
 }

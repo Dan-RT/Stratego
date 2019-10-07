@@ -26,8 +26,8 @@ public class GameController {
 
     @CrossOrigin
     @GetMapping("/helloWorld")
-    public Game helloWorld() {
-        return this.gameService.testDb();
+    public String helloWorld() {
+        return "Hello World!";
     }
 
     @CrossOrigin
@@ -39,10 +39,14 @@ public class GameController {
     @CrossOrigin
     @GetMapping("/game/initialize")
     public Game initializeGame() {
+        //return gameService.initGame();
+        return null;
+    }
 
-        Game game = gameService.initGame();
-
-        return game;
+    @CrossOrigin
+    @PutMapping("/game")
+    public Game updateGame(@ApiParam(value = "game valid object", required = true) @Valid @RequestBody Game game) {
+        return gameService.updateGame(game);
     }
 
     @CrossOrigin

@@ -18,6 +18,18 @@ public class PlayerDao {
         return playerRepository.save(player);
     }
 
+    public Player updatePlayer(Player player) {
+        Player updatedPlayer = playerRepository.findBy_id(player.get_id());
+
+        updatedPlayer.set_id(player.get_id());
+        updatedPlayer.setName(player.getName());
+        updatedPlayer.setTeam(player.getTeam());
+        updatedPlayer.setReady(player.getReady());
+        updatedPlayer.setPlaying(player.getPlaying());
+
+        return playerRepository.save(updatedPlayer);
+    }
+
     public Player getPlayerById(String id) {
         return playerRepository.findBy_id(id);
     }

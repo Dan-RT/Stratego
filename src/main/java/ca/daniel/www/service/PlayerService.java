@@ -1,6 +1,7 @@
 package ca.daniel.www.service;
 
 import ca.daniel.www.dao.PlayerDao;
+import ca.daniel.www.model.Game;
 import ca.daniel.www.model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,12 @@ import java.util.List;
 public class PlayerService {
 
     private PlayerDao playerDao;
+    private GameService gameService;
 
     @Autowired
-    public PlayerService(PlayerDao playerDao) {
+    public PlayerService(PlayerDao playerDao, GameService gameService) {
         this.playerDao = playerDao;
+        this.gameService = gameService;
     }
 
     public Player getPlayer(String id) {
@@ -27,5 +30,40 @@ public class PlayerService {
 
     public Player savePlayer(Player player) {
         return this.playerDao.savePlayer(player);
+    }
+
+    public Game getOpponent(String playerId) {
+        List<Player> players = playerDao.getAllPlayers();
+        Player current = playerDao.getPlayerById(playerId);
+        Player futureOpponent = null;
+
+        if (current == null) {
+            return null;
+        }
+
+        Game gameAssigned = hadAssignedGame(playerId);
+        if(gameAssigned != null) {
+            return gameAssigned;
+        }
+
+        for (Player opponent:players) {
+            if (opponent.getReady()) {
+                futureOpponent = opponent;
+                break;
+            }
+        }
+
+        current.setReady(true);
+        playerDao.updatePlayer(current);
+
+        if (futureOpponent == null) {
+            return null;
+        }
+
+        return gameService.initGame(current, futureOpponent);
+    }
+
+    private Game hadAssignedGame(String playerId) {
+        return null;
     }
 }

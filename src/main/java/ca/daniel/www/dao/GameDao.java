@@ -15,6 +15,18 @@ public class GameDao {
     public Game saveGame(Game game) {
         return gameRepository.save(game);
     }
+    
+    public Game updateGame(Game game) {
+        Game updatedGame = gameRepository.findBy_id(game.get_id());
+        
+        updatedGame.set_id(game.get_id());
+        updatedGame.setBoard(game.getBoard());
+        updatedGame.setPieces1(game.getPieces1());
+        updatedGame.setPieces2(game.getPieces2());
+        updatedGame.setPlayers(game.getPlayers());
+        
+        return gameRepository.save(updatedGame);
+    }
 
     public Game getGameById(String id) {
         return gameRepository.findBy_id(id);

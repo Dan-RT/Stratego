@@ -23,6 +23,12 @@ public class Player extends JacksonObject {
     @NotNull
     @JsonProperty("team")
     private int team;
+    @NotNull
+    @JsonProperty("ready")
+    private boolean ready;
+    @NotNull
+    @JsonProperty("playing")
+    private boolean playing;
 
     public Player() {
         super();
@@ -51,5 +57,21 @@ public class Player extends JacksonObject {
     @JsonProperty("team")
     public void setTeam(int team) {
         this.team = team;
+    }
+    @JsonProperty("ready")
+    public boolean getReady() {
+        return ready;
+    }
+    @JsonProperty("ready")
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
+    @JsonProperty("playing")
+    public boolean getPlaying() {
+        return playing;
+    }
+    @JsonProperty("playing")
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 @Document(collection = "game")
 public class Game extends JacksonObject {
     @Id
-    public String _id;
+    private String _id;
     @NotNull
     @Valid
     @JsonProperty("board")
@@ -42,7 +42,6 @@ public class Game extends JacksonObject {
         pieces1 = new ArrayList<>();
         pieces2 = new ArrayList<>();
         players = new ArrayList<>();
-        board = GameService.initBoard();
     }
 
     public void init() {
@@ -133,6 +132,14 @@ public class Game extends JacksonObject {
         }
     }
 
+    @JsonProperty("_id")
+    public String get_id() {
+        return _id;
+    }
+    @JsonProperty("_id")
+    public void set_id(String _id) {
+        this._id = _id;
+    }
     @JsonProperty("pieces1")
     public List<Piece> getPieces1() {
         return this.pieces1;
@@ -160,6 +167,9 @@ public class Game extends JacksonObject {
     @JsonProperty("players")
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+    public void addPlayer(Player player){
+        this.players.add(player);
     }
     @JsonProperty("players")
     public List<Player> getPlayers() {
