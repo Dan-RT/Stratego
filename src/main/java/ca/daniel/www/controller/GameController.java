@@ -40,7 +40,7 @@ public class GameController {
     @GetMapping("/game/initialize")
     public Game initializeGame() {
         //return gameService.initGame();
-        return null;
+        return gameService.initGameOld();
     }
 
     @CrossOrigin

@@ -31,6 +31,12 @@ public class GameService {
         return gameDao.saveGame(game);
     }
 
+    public Game initGameOld() {
+        Game game = new Game();
+        game.init();
+        return game;
+    }
+
     public Game updateGame(Game game) {
         return gameDao.updateGame(game);
     }
