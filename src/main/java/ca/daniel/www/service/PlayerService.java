@@ -41,7 +41,7 @@ public class PlayerService {
             return null;
         }
 
-        Game gameAssigned = hadAssignedGame(playerId);
+        Game gameAssigned = hadAssignedGame(current);
         if(gameAssigned != null) {
             return gameAssigned;
         }
@@ -63,7 +63,8 @@ public class PlayerService {
         return gameService.initGame(current, futureOpponent);
     }
 
-    private Game hadAssignedGame(String playerId) {
+    private Game hadAssignedGame(Player current) {
+        // TODO: 2019-10-06 to be implemented, search for a game with our player object init
         return null;
     }
 }
