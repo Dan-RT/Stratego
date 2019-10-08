@@ -21,8 +21,6 @@ public class GameDao {
         
         updatedGame.set_id(game.get_id());
         updatedGame.setBoard(game.getBoard());
-        updatedGame.setPieces1(game.getPieces1());
-        updatedGame.setPieces2(game.getPieces2());
         updatedGame.setPlayers(game.getPlayers());
         
         return gameRepository.save(updatedGame);

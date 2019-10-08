@@ -26,6 +26,7 @@ public class PlayerDao {
         updatedPlayer.setTeam(player.getTeam());
         updatedPlayer.setReady(player.getReady());
         updatedPlayer.setPlaying(player.getPlaying());
+        updatedPlayer.setPieces(player.getPieces());
 
         return playerRepository.save(updatedPlayer);
     }

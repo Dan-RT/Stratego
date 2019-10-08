@@ -47,7 +47,7 @@ public class PlayerService {
         }
 
         for (Player opponent:players) {
-            if (opponent.getReady()) {
+            if (opponent.getReady() && !opponent.get_id().equals(current.get_id())) {
                 futureOpponent = opponent;
                 break;
             }

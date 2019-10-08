@@ -21,6 +21,14 @@ public class Attack extends JacksonObject {
     @Valid
     @JsonProperty("pieceAttacked")
     private Piece pieceAttacked;
+    @NotNull
+    @Valid
+    @JsonProperty("playerAttacking")
+    private Player playerAttacking;
+    @NotNull
+    @Valid
+    @JsonProperty("playerAttacked")
+    private Player playerAttacked;
 
     public Attack() {
         super();
@@ -49,5 +57,21 @@ public class Attack extends JacksonObject {
     @JsonProperty("pieceAttacked")
     public void setPieceAttacked(Piece pieceAttacked) {
         this.pieceAttacked = pieceAttacked;
+    }
+    @JsonProperty("playerAttacking")
+    public Player getPlayerAttacking() {
+        return playerAttacking;
+    }
+    @JsonProperty("playerAttacking")
+    public void setPlayerAttacking(Player playerAttacking) {
+        this.playerAttacking = playerAttacking;
+    }
+    @JsonProperty("playerAttacked")
+    public Player getPlayerAttacked() {
+        return playerAttacked;
+    }
+    @JsonProperty("playerAttacked")
+    public void setPlayerAttacked(Player playerAttacked) {
+        this.playerAttacked = playerAttacked;
     }
 }

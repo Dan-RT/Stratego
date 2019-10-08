@@ -44,7 +44,7 @@ public class GameService {
     public Game setGame() {
         Game game = new Game();
         game.init();
-        game.randomSet();
+        //game.randomSet();
         return game;
     }
 

@@ -9,13 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AttackService {
 
-    private GameService gameService;
-
-    @Autowired
-    public AttackService(GameService gameService) {
-        this.gameService = gameService;
-    }
-
     public Attack manageAttack(Attack attack) {
 
         if (!TurnService.isAuthorized(attack.getBoard(), attack.getPieceAttacking(), attack.getPieceAttacked().getCoordinate(), true)) {
@@ -26,30 +19,39 @@ public class AttackService {
         int rankAttacked = attack.getPieceAttacked().getType().getRank();
 
         if (rankAttacking > rankAttacked) {
-            attack.setBoard(gameService.setPieceOnBoard(
+            attack.getPlayerAttacked().addPiece(attack.getPieceAttacked());
+            attack.setBoard(GameService.setPieceOnBoard(
                     attack.getBoard(),
                     attack.getPieceAttacking().getCoordinate(),
                     attack.getPieceAttacked().getCoordinate(),
                     attack.getPieceAttacking()));
+            attack.getPlayerAttacked().update();
         } else if (rankAttacking < rankAttacked) {
-            attack.setBoard(gameService.setPieceOnBoard(
+            attack.getPlayerAttacking().addPiece(attack.getPieceAttacking());
+            attack.setBoard(GameService.setPieceOnBoard(
                     attack.getBoard(),
                     attack.getPieceAttacking().getCoordinate(),
                     attack.getPieceAttacked().getCoordinate(),
                     attack.getPieceAttacked()));
+            attack.getPlayerAttacking().update();
         } else {
-
+            attack.getPlayerAttacked().addPiece(attack.getPieceAttacked());
             Piece emptyPiece = new Piece();
             emptyPiece.setType(PieceType.NONE);
             emptyPiece.setCoordinate(attack.getPieceAttacking().getCoordinate());
-            attack.setBoard(gameService.setPieceOnBoard(attack.getBoard(), attack.getPieceAttacked().getCoordinate(), attack.getPieceAttacking().getCoordinate(), new Piece()));
+            attack.setBoard(GameService.setPieceOnBoard(attack.getBoard(), attack.getPieceAttacked().getCoordinate(), attack.getPieceAttacking().getCoordinate(), new Piece()));
 
-
+            attack.getPlayerAttacking().addPiece(attack.getPieceAttacking());
             Piece emptyPiece2 = new Piece();
             emptyPiece2.setType(PieceType.NONE);
             emptyPiece2.setCoordinate(attack.getPieceAttacked().getCoordinate());
-            attack.setBoard(gameService.setPieceOnBoard(attack.getBoard(), attack.getPieceAttacking().getCoordinate(), attack.getPieceAttacked().getCoordinate(), emptyPiece2));
+            attack.setBoard(GameService.setPieceOnBoard(attack.getBoard(), attack.getPieceAttacking().getCoordinate(), attack.getPieceAttacked().getCoordinate(), emptyPiece2));
+
+            attack.getPlayerAttacking().update();
+            attack.getPlayerAttacked().update();
         }
+
+
 
         return attack;
     }
