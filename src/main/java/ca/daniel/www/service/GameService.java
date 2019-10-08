@@ -1,6 +1,7 @@
 package ca.daniel.www.service;
 
 import ca.daniel.www.dao.GameDao;
+import ca.daniel.www.dao.PlayerDao;
 import ca.daniel.www.model.Coordinate;
 import ca.daniel.www.model.Game;
 import ca.daniel.www.model.Piece;
@@ -15,10 +16,12 @@ import java.util.List;
 public class GameService {
 
     private GameDao gameDao;
+    private PlayerDao playerDao;
 
     @Autowired
-    public GameService(GameDao gameDao) {
+    public GameService(GameDao gameDao, PlayerDao playerDao) {
         this.gameDao = gameDao;
+        this.playerDao = playerDao;
     }
 
     public Game initGame(Player player1, Player player2) {
@@ -26,6 +29,8 @@ public class GameService {
         game.init();
         player1.setTeam(1);
         player2.setTeam(2);
+        playerDao.updatePlayer(player1);
+        playerDao.updatePlayer(player2);
         game.addPlayer(player1);
         game.addPlayer(player2);
         return gameDao.saveGame(game);

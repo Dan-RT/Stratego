@@ -1,5 +1,6 @@
 package ca.daniel.www.service;
 
+import ca.daniel.www.dao.PlayerDao;
 import ca.daniel.www.model.Attack;
 import ca.daniel.www.model.Piece;
 import ca.daniel.www.model.customEnum.PieceType;
@@ -8,6 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AttackService {
+
+    private PlayerDao playerDao;
+
+    @Autowired
+    public AttackService(PlayerDao playerDao) {
+        this.playerDao = playerDao;
+    }
 
     public Attack manageAttack(Attack attack) {
 
@@ -25,7 +33,7 @@ public class AttackService {
                     attack.getPieceAttacking().getCoordinate(),
                     attack.getPieceAttacked().getCoordinate(),
                     attack.getPieceAttacking()));
-            attack.getPlayerAttacked().update();
+            playerDao.updatePlayer(attack.getPlayerAttacked());
         } else if (rankAttacking < rankAttacked) {
             attack.getPlayerAttacking().addPiece(attack.getPieceAttacking());
             attack.setBoard(GameService.setPieceOnBoard(
@@ -33,7 +41,7 @@ public class AttackService {
                     attack.getPieceAttacking().getCoordinate(),
                     attack.getPieceAttacked().getCoordinate(),
                     attack.getPieceAttacked()));
-            attack.getPlayerAttacking().update();
+            playerDao.updatePlayer(attack.getPlayerAttacking());
         } else {
             attack.getPlayerAttacked().addPiece(attack.getPieceAttacked());
             Piece emptyPiece = new Piece();
@@ -47,8 +55,8 @@ public class AttackService {
             emptyPiece2.setCoordinate(attack.getPieceAttacked().getCoordinate());
             attack.setBoard(GameService.setPieceOnBoard(attack.getBoard(), attack.getPieceAttacking().getCoordinate(), attack.getPieceAttacked().getCoordinate(), emptyPiece2));
 
-            attack.getPlayerAttacking().update();
-            attack.getPlayerAttacked().update();
+            playerDao.updatePlayer(attack.getPlayerAttacked());
+            playerDao.updatePlayer(attack.getPlayerAttacking());
         }
 
 

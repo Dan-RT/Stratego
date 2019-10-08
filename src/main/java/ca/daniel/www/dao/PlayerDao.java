@@ -2,6 +2,7 @@ package ca.daniel.www.dao;
 
 import ca.daniel.www.model.Player;
 import ca.daniel.www.repository.PlayerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public class PlayerDao {
     private PlayerRepository playerRepository;
 
+    @Autowired
     public PlayerDao(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
     }
