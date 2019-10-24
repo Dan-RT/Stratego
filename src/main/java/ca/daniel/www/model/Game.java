@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"board", "players", "pieces1", "pieces2"})
+@JsonPropertyOrder({"board", "players", "playingPlayer"})
 @Document(collection = "game")
 public class Game extends JacksonObject {
     @Id
@@ -26,6 +26,9 @@ public class Game extends JacksonObject {
     @Valid
     @JsonProperty("players")
     private List<Player> players;
+    @NotNull
+    @JsonProperty("playingPlayer")
+    private int playingPlayer;
 
     public Game() {
         players = new ArrayList<>();
@@ -61,8 +64,27 @@ public class Game extends JacksonObject {
     public List<Player> getPlayers() {
         return players;
     }
+    @JsonProperty("playingPlayer")
+    public int getPlayingPlayer() {
+        return playingPlayer;
+    }
+    @JsonProperty("playingPlayer")
+    public void setPlayingPlayer(int playingPlayer) {
+        this.playingPlayer = playingPlayer;
+    }
+    public void updatePlayingPlayer() {
+        if (this.playingPlayer == 1) {
+            this.playingPlayer = 2;
+        } else {
+            this.playingPlayer = 1;
+        }
+    }
+}
 
-    /*
+
+
+
+/*
     public void randomPieceSetter(List<Piece> pieces, int team) {
         int minY;
         int maxY;
@@ -110,4 +132,3 @@ public class Game extends JacksonObject {
         }
     }
     */
-}

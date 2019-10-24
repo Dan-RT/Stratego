@@ -26,13 +26,16 @@ public class GameService {
 
     public Game initGame(Player player1, Player player2) {
         Game game = new Game();
-        game.init();
         player1.setTeam(1);
+        player1.initPieces();
         player2.setTeam(2);
+        player2.initPieces();
         playerDao.updatePlayer(player1);
         playerDao.updatePlayer(player2);
+        game.init();
         game.addPlayer(player1);
         game.addPlayer(player2);
+        game.setPlayingPlayer(1);
         return gameDao.saveGame(game);
     }
 
@@ -43,14 +46,15 @@ public class GameService {
     }
 
     public Game updateGame(Game game) {
+
+        game.updatePlayingPlayer();
+
         return gameDao.updateGame(game);
     }
 
-    public Game setGame() {
-        Game game = new Game();
-        game.init();
-        //game.randomSet();
-        return game;
+    public Game setGame(Game game) {
+        game.setPlayingPlayer(1);
+        return gameDao.updateGame(game);
     }
 
     public static Piece[][] initBoard() {

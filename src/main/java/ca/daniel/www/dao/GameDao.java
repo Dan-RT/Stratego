@@ -4,6 +4,8 @@ import ca.daniel.www.model.Game;
 import ca.daniel.www.repository.GameRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class GameDao {
     private GameRepository gameRepository;
@@ -18,7 +20,11 @@ public class GameDao {
     
     public Game updateGame(Game game) {
         Game updatedGame = gameRepository.findBy_id(game.get_id());
-        
+
+        if (updatedGame == null) {
+            updatedGame = new Game();
+        }
+
         updatedGame.set_id(game.get_id());
         updatedGame.setBoard(game.getBoard());
         updatedGame.setPlayers(game.getPlayers());
@@ -28,5 +34,9 @@ public class GameDao {
 
     public Game getGameById(String id) {
         return gameRepository.findBy_id(id);
+    }
+
+    public List<Game> getAllGames() {
+        return gameRepository.findAll();
     }
 }

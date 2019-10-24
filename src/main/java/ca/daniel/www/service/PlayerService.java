@@ -1,5 +1,6 @@
 package ca.daniel.www.service;
 
+import ca.daniel.www.dao.GameDao;
 import ca.daniel.www.dao.PlayerDao;
 import ca.daniel.www.model.Game;
 import ca.daniel.www.model.Player;
@@ -12,11 +13,13 @@ import java.util.List;
 public class PlayerService {
 
     private PlayerDao playerDao;
+    private GameDao gameDao;
     private GameService gameService;
 
     @Autowired
-    public PlayerService(PlayerDao playerDao, GameService gameService) {
+    public PlayerService(PlayerDao playerDao, GameDao gameDao, GameService gameService) {
         this.playerDao = playerDao;
+        this.gameDao = gameDao;
         this.gameService = gameService;
     }
 
@@ -63,8 +66,18 @@ public class PlayerService {
         return gameService.initGame(current, futureOpponent);
     }
 
-    private Game hadAssignedGame(Player current) {
-        // TODO: 2019-10-06 to be implemented, search for a game with our player object init
+    private Game hadAssignedGame(Player currentPlayer) {
+
+        List<Game> games = gameDao.getAllGames();
+
+        for (Game gameTmp:games) {
+            for (Player playerTmp:gameTmp.getPlayers()) {
+                if (playerTmp.get_id().equals(currentPlayer.get_id())) {
+                    return gameTmp;
+                }
+            }
+        }
+
         return null;
     }
 }

@@ -33,7 +33,17 @@ public class GameController {
     @CrossOrigin
     @GetMapping("/game")
     public Game game() {
-        return gameService.setGame();
+        return null;
+        //return gameService.setGame(game);
+    }
+
+    @CrossOrigin
+    @PostMapping("/game/setup")
+    public Game setGame(@ApiParam(value = "game valid object", required = true) @Valid @RequestBody Game game) {
+
+        gameService.setGame(game);
+
+        return gameService.setGame(game);
     }
 
     @CrossOrigin

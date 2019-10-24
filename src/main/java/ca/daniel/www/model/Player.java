@@ -39,52 +39,48 @@ public class Player extends JacksonObject {
     @NotNull
     @JsonProperty("pieces")
     private List<Piece> pieces;
-    private PlayerDao playerDao;
 
     @Autowired
-    public Player(PlayerDao playerDao) {
+    public Player() {
         super();
-        this.playerDao = playerDao;
         this.pieces = new ArrayList<>();
-        this.initPieces();
     }
 
-    private void initPieces() {
+    public void initPieces() {
+        List<Piece> piecesList = new ArrayList<>();
+
         for(int i = 0; i < 8; i++) {
-            this.pieces.add(new Piece(new ObjectId(), PieceType.SCOUT, 8, Movement.JUMP, this.team, true, new Coordinate()));
+            piecesList.add(new Piece(new ObjectId(), PieceType.SCOUT, 8, Movement.JUMP, this.team, true, new Coordinate()));
         }
         for(int i = 0; i < 5; i++) {
-            this.pieces.add(new Piece(new ObjectId(), PieceType.MINER, 5, Movement.NORMAL, this.team, true, new Coordinate()));
+            piecesList.add(new Piece(new ObjectId(), PieceType.MINER, 5, Movement.NORMAL, this.team, true, new Coordinate()));
         }
         for(int i = 0; i < 4; i++) {
-            this.pieces.add(new Piece(new ObjectId(), PieceType.SERGEANT, 4, Movement.NORMAL, this.team, true, new Coordinate()));
+            piecesList.add(new Piece(new ObjectId(), PieceType.SERGEANT, 4, Movement.NORMAL, this.team, true, new Coordinate()));
         }
         for(int i = 0; i < 4; i++) {
-            this.pieces.add(new Piece(new ObjectId(), PieceType.LIEUTENANT, 4, Movement.NORMAL, this.team, true, new Coordinate()));
+            piecesList.add(new Piece(new ObjectId(), PieceType.LIEUTENANT, 4, Movement.NORMAL, this.team, true, new Coordinate()));
         }
         for(int i = 0; i < 4; i++) {
-            this.pieces.add(new Piece(new ObjectId(), PieceType.CAPTAIN, 4, Movement.NORMAL, this.team, true, new Coordinate()));
+            piecesList.add(new Piece(new ObjectId(), PieceType.CAPTAIN, 4, Movement.NORMAL, this.team, true, new Coordinate()));
         }
         for(int i = 0; i < 3; i++) {
-            this.pieces.add(new Piece(new ObjectId(), PieceType.MAJOR, 3, Movement.NORMAL, this.team, true, new Coordinate()));
+            piecesList.add(new Piece(new ObjectId(), PieceType.MAJOR, 3, Movement.NORMAL, this.team, true, new Coordinate()));
         }
         for(int i = 0; i < 2; i++) {
-            this.pieces.add(new Piece(new ObjectId(), PieceType.COLONEL, 2, Movement.NORMAL, this.team, true, new Coordinate()));
+            piecesList.add(new Piece(new ObjectId(), PieceType.COLONEL, 2, Movement.NORMAL, this.team, true, new Coordinate()));
         }
-        this.pieces.add(new Piece(new ObjectId(), PieceType.GENERAL, 1, Movement.NORMAL, this.team, true, new Coordinate()));
-        this.pieces.add(new Piece(new ObjectId(), PieceType.MARSHAL, 1, Movement.NORMAL, this.team, true, new Coordinate()));
+        piecesList.add(new Piece(new ObjectId(), PieceType.GENERAL, 1, Movement.NORMAL, this.team, true, new Coordinate()));
+        piecesList.add(new Piece(new ObjectId(), PieceType.MARSHAL, 1, Movement.NORMAL, this.team, true, new Coordinate()));
 
         for(int i = 0; i < 6; i++) {
-            this.pieces.add(new Piece(new ObjectId(), PieceType.BOMB, 6, Movement.IDLE, this.team, true, new Coordinate()));
+            piecesList.add(new Piece(new ObjectId(), PieceType.BOMB, 6, Movement.IDLE, this.team, true, new Coordinate()));
         }
 
-        this.pieces.add(new Piece(new ObjectId(), PieceType.FLAG, 1, Movement.IDLE, this.team, true, new Coordinate()));
-        this.pieces.add(new Piece(new ObjectId(), PieceType.SPY, 1, Movement.NORMAL, this.team, true, new Coordinate()));
+        piecesList.add(new Piece(new ObjectId(), PieceType.FLAG, 1, Movement.IDLE, this.team, true, new Coordinate()));
+        piecesList.add(new Piece(new ObjectId(), PieceType.SPY, 1, Movement.NORMAL, this.team, true, new Coordinate()));
 
-    }
-
-    public Player update() {
-        return playerDao.updatePlayer(this);
+        this.setPieces(piecesList);
     }
 
     @JsonProperty("_id")
