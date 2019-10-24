@@ -8,8 +8,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"board", "pieceAttacking", "pieceAttacked"})
+@JsonPropertyOrder({"gameId", "board", "pieceAttacking", "pieceAttacked"})
 public class Attack extends JacksonObject {
+    @NotNull
+    @JsonProperty("gameId")
+    private String gameId;
     @NotNull
     @JsonProperty("board")
     private Piece[][] board;
@@ -34,6 +37,14 @@ public class Attack extends JacksonObject {
         super();
     }
 
+    @JsonProperty("gameId")
+    public String getGameId() {
+        return gameId;
+    }
+    @JsonProperty("gameId")
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
     @JsonProperty("board")
     public Piece[][] getBoard() {
         return board;
@@ -74,4 +85,5 @@ public class Attack extends JacksonObject {
     public void setPlayerAttacked(Player playerAttacked) {
         this.playerAttacked = playerAttacked;
     }
+
 }

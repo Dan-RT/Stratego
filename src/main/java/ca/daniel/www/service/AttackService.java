@@ -20,7 +20,7 @@ public class AttackService {
     public Attack manageAttack(Attack attack) {
 
         if (!TurnService.isAuthorized(attack.getBoard(), attack.getPieceAttacking(), attack.getPieceAttacked().getCoordinate(), true)) {
-            return attack;
+            return null;
         }
 
         int rankAttacking = attack.getPieceAttacking().getType().getRank();
@@ -58,8 +58,6 @@ public class AttackService {
             playerDao.updatePlayer(attack.getPlayerAttacked());
             playerDao.updatePlayer(attack.getPlayerAttacking());
         }
-
-
 
         return attack;
     }

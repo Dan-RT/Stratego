@@ -2,10 +2,7 @@ package ca.daniel.www.service;
 
 import ca.daniel.www.dao.GameDao;
 import ca.daniel.www.dao.PlayerDao;
-import ca.daniel.www.model.Coordinate;
-import ca.daniel.www.model.Game;
-import ca.daniel.www.model.Piece;
-import ca.daniel.www.model.Player;
+import ca.daniel.www.model.*;
 import ca.daniel.www.model.customEnum.PieceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +45,19 @@ public class GameService {
     public Game updateGame(Game game) {
 
         game.updatePlayingPlayer();
+
+        return gameDao.updateGame(game);
+    }
+
+    public Game updateGame(Attack attack) {
+
+        Game game = gameDao.getGameById(attack.getGameId());
+
+        if (game == null) {
+            return null;
+        }
+
+        game.setBoard(attack.getBoard());
 
         return gameDao.updateGame(game);
     }

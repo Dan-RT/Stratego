@@ -71,12 +71,14 @@ public class GameController {
 
     @CrossOrigin
     @PostMapping("/attack")
-    public Attack attack(@ApiParam(value = "attack valid object", required = true) @Valid @RequestBody Attack attack) {
+    public Game attack(@ApiParam(value = "attack valid object", required = true) @Valid @RequestBody Attack attack) {
 
         attack = attackService.manageAttack(attack);
 
-        //GameService.displayBoard(attack.getBoard());
+        if (attack == null) {
+            return null;
+        }
 
-        return attack;
+        return gameService.updateGame(attack);
     }
 }
