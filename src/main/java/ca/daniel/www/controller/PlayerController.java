@@ -5,6 +5,8 @@ import ca.daniel.www.model.Game;
 import ca.daniel.www.model.Player;
 import ca.daniel.www.service.PlayerService;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class PlayerController {
 
     private PlayerService playerService;
-
+    private Logger logger = LoggerFactory.getLogger(PlayerController.class);
 
     @Autowired
     public PlayerController(PlayerService playerService) {
@@ -25,24 +27,28 @@ public class PlayerController {
     @CrossOrigin
     @GetMapping("/player/{id}")
     public Player getPlayer(@PathVariable("id") String id) {
+        logger.info("GET /player/" + id);
         return this.playerService.getPlayer(id);
     }
 
     @CrossOrigin
     @GetMapping("/players")
     public List<Player> getAllPlayers() {
+        logger.info("GET /players");
         return this.playerService.getAllPlayers();
     }
 
     @CrossOrigin
     @PostMapping("/player")
     public Player addPlayer(@ApiParam(value = "player valid object", required = true) @Valid @RequestBody Player player) {
+        logger.info("POST /player");
         return this.playerService.savePlayer(player);
     }
 
     @CrossOrigin
     @GetMapping("/player/opponent/{id}")
     public Game getOpponent(@PathVariable("id") String id) throws OpponentNotReady {
+        logger.info("GET /player/opponent/" + id);
         Game game = this.playerService.getOpponent(id);
         if (game == null) {
             throw new OpponentNotReady("No ready opponent was found.");

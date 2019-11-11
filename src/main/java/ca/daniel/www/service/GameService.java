@@ -42,6 +42,10 @@ public class GameService {
         return game;
     }
 
+    public Game getGame(String id) {
+        return gameDao.getGameById(id);
+    }
+
     public Game updateGame(Game game) {
 
         game.updatePlayingPlayer();
