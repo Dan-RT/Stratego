@@ -64,13 +64,11 @@ public class GameController {
 
     @CrossOrigin
     @PostMapping("/turn")
-    public Turn turn(@ApiParam(value = "turn valid object", required = true) @Valid @RequestBody Turn turn) {
+    public Game turn(@ApiParam(value = "turn valid object", required = true) @Valid @RequestBody Turn turn) {
         logger.info("POST /turn");
-        Turn resp = turnService.movePieceOnBoard(turn);
 
-        //GameService.displayBoard(resp.getBoard());
-
-        return resp;
+        return gameService.updateGame(
+                turnService.movePieceOnBoard(turn));
     }
 
     @CrossOrigin

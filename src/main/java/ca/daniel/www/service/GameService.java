@@ -66,6 +66,19 @@ public class GameService {
         return gameDao.updateGame(game);
     }
 
+    public Game updateGame(Turn turn) {
+
+        Game game = gameDao.getGameById(turn.getGameId());
+
+        if (game == null) {
+            return null;
+        }
+
+        game.setBoard(turn.getBoard());
+
+        return gameDao.updateGame(game);
+    }
+
     public Game setGame(Game game) {
         game.setPlayingPlayer(1);
         return gameDao.updateGame(game);

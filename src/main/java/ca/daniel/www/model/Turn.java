@@ -11,6 +11,9 @@ import javax.validation.constraints.NotNull;
 @JsonPropertyOrder({"board","pieceToMove", "action", "authorized"})
 public class Turn extends JacksonObject {
     @NotNull
+    @JsonProperty("gameId")
+    private String gameId;
+    @NotNull
     @JsonProperty("board")
     private Piece[][] board;
     /*@NotNull
@@ -86,5 +89,13 @@ public class Turn extends JacksonObject {
     @JsonProperty("authorized")
     public void setAuthorized(boolean authorized) {
         this.authorized = authorized;
+    }
+    @JsonProperty("gameId")
+    public String getGameId() {
+        return gameId;
+    }
+    @JsonProperty("gameId")
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 }
